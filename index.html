@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d1510">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PV Watch">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>PVWatch — Live weather, alerts, crime and local conditions for Paradise Valley, AZ</title>
 <meta name="description" content="Live weather, National Weather Service alerts, police activity, earthquakes, wildfire reports, and local places for Paradise Valley, Arizona.">
 <link rel="canonical" href="https://azpvwatch.com/">
@@ -138,6 +146,59 @@ html[data-theme="dark"] body.theme-night-summer{background:linear-gradient(180de
 @media print{.masthead,.ticker,.statusline,#weather-canvas{display:none}.tab-section{display:block!important}}
 html[data-theme="light"] #weather-canvas{display:none}
 
+.em-nums{margin-top:12px}
+.em-loc{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:8px 0 12px}
+.em-loc .note{margin:0}
+.food-rating a,.em-dirs a{color:var(--ember);text-decoration:underline}
+.em-dirs{font-size:.8rem;margin-top:8px;color:var(--text2)}
+.pwa-dlg{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px}
+.pwa-dlg[hidden]{display:none}
+.pwa-box{position:relative;background:var(--card);color:var(--text);border:1px solid var(--border2);max-width:460px;width:100%;max-height:90vh;overflow:auto;padding:22px 22px 18px}
+.pwa-box h2{margin:0 0 10px;font-size:1.2rem}
+.pwa-box ol{margin:8px 0 12px;padding-left:22px;line-height:1.55;font-size:.92rem}
+.pwa-box details{margin:8px 0;font-size:.86rem}
+.pwa-x{position:absolute;top:6px;right:8px;background:none;border:0;color:var(--text2);font-size:1.6rem;min-width:44px;min-height:44px;cursor:pointer}
+.pwa-go{display:inline-block;background:var(--ember);color:#fff;border:0;padding:12px 18px;min-height:44px;font-family:Consolas,'SFMono-Regular',Menlo,'Courier New',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin:6px 0}
+
+.tbl-wrap{overflow-x:auto;margin:10px 0}
+.tbl{width:100%;border-collapse:collapse;font-size:.86rem;background:var(--card)}
+.tbl th,.tbl td{padding:9px 8px;border:1px solid var(--border);text-align:right;white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl th{font-family:Consolas,'SFMono-Regular',Menlo,'Courier New',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);font-weight:400}
+.tbl tr.latest td{font-weight:700}
+.stat-card .sub{font-size:.76rem;color:var(--text2);margin-top:4px;line-height:1.4}
+
+.rd{max-width:780px}
+.rd-bands{display:flex;gap:8px;margin:12px 0 10px}
+.rd-band{flex:1;min-height:46px;padding:10px;font-family:Consolas,'SFMono-Regular',Menlo,'Courier New',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;background:#2a1f12;color:#ecdcb4;border:2px solid #5a4528;cursor:pointer}
+.rd-band[aria-pressed="true"]{background:#d2a94c;color:#1b1308;border-color:#f0cf7a;font-weight:700}
+.rd-panel{background:linear-gradient(#3b2b17,#25180a);padding:14px;border:2px solid #5a4528;border-radius:6px;box-shadow:inset 0 2px 10px rgba(0,0,0,.6)}
+.rd-window{position:relative;height:124px;background:linear-gradient(#ffeab0,#f4d27a 60%,#d9aa49);border:3px solid #120b04;border-radius:4px;box-shadow:inset 0 0 20px rgba(90,45,0,.55);cursor:ew-resize;touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden}
+.rd-window:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.rd-tick{position:absolute;bottom:16px;width:1px;height:14px;background:#3a2606}
+.rd-tick.maj{height:30px;width:2px}
+.rd-lab{position:absolute;bottom:50px;transform:translateX(-50%);font:700 .82rem Georgia,"Times New Roman",serif;color:#2e1d05;white-space:nowrap}
+.rd-mark{position:absolute;top:6px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #7a1d12;transform:translateX(-50%)}
+.rd-needle{position:absolute;top:0;bottom:0;width:3px;background:#d4261a;box-shadow:0 0 8px rgba(212,38,26,.85);transform:translateX(-50%);transition:left .6s cubic-bezier(.25,.8,.25,1)}
+.rd-needle::before{content:"";position:absolute;top:-1px;left:-5px;width:13px;height:13px;border-radius:50%;background:#d4261a}
+.rd-needle.drag{transition:none}
+.rd-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0) 42%)}
+.rd-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.rd-btn{min-height:44px;padding:8px 14px;font-family:Consolas,'SFMono-Regular',Menlo,'Courier New',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;background:#2a1f12;color:#ecdcb4;border:2px solid #5a4528;cursor:pointer}
+.rd-btn:hover{border-color:#d2a94c}
+.rd-play{background:#a3361f;border-color:#e0674d;color:#fff;min-width:96px}
+.rd-small{min-height:44px}
+.rd-vol{display:flex;align-items:center;gap:8px;color:#ecdcb4;font-family:Consolas,'SFMono-Regular',Menlo,'Courier New',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+.rd-vol input{width:110px;accent-color:#d2a94c}
+.rd-now{background:#15100a;color:#f4e5bd;padding:12px 14px;border-radius:4px;margin:10px 0;line-height:1.55;font-size:.9rem;border:1px solid #5a4528}
+.rd-now a{color:#ffd27a}
+.rd-list{margin-top:6px}
+.rd-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.rd-card[aria-pressed="true"]{border-color:var(--ember)}
+.rd-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.rd-tag{display:inline-block;font-family:Consolas,'SFMono-Regular',Menlo,'Courier New',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);border:1px solid var(--border2);padding:2px 6px}
+@media (prefers-reduced-motion:reduce){.rd-needle{transition:none}}
+
 </style>
 </head>
 <body>
@@ -157,6 +218,8 @@ html[data-theme="light"] #weather-canvas{display:none}
     <button class="nav-item" data-tab="weather" type="button">Weather</button>
     <button class="nav-item" data-tab="community" type="button">Community</button>
     <button class="nav-item" data-tab="food" type="button">Food &amp; Local</button>
+    <button class="nav-item" data-tab="emergency" type="button">Emergency</button>
+    <button class="nav-item" data-tab="radio" type="button">Radio</button>
     <button class="nav-item" data-tab="stats" type="button">Statistics</button>
   </nav>
 </div>
@@ -174,7 +237,8 @@ html[data-theme="light"] #weather-canvas{display:none}
     <div class="alert-card info click" data-go="alerts" id="ov-quakes"><div class="alert-icon">&#127758;</div><div class="alert-body"><div class="alert-title">Earthquakes</div><div class="alert-text">Loading&hellip;</div></div></div>
     <div class="alert-card info click" data-go="alerts" id="ov-fire"><div class="alert-icon">&#128293;</div><div class="alert-body"><div class="alert-title">Wildfire</div><div class="alert-text">Loading&hellip;</div></div></div>
     <div class="alert-card info click" data-go="stats" id="ov-facts"><div class="alert-icon">&#128202;</div><div class="alert-body"><div class="alert-title">About Paradise Valley</div><div class="alert-text">Loading&hellip;</div></div></div>
-    <a class="alert-card info click" href="checkup/" id="ov-biz"><div class="alert-icon">&#128188;</div><div class="alert-body"><div class="alert-title">Own a business in Paradise Valley? Ask for a free consult</div><div class="alert-text">Talk to a person about your business systems. Nothing is tested or scanned. By Bridgehead.</div></div></a>
+    <a class="alert-card ok click" href="#save" id="pwa-card"><div class="alert-icon">&#128241;</div><div class="alert-body"><div class="alert-title">Save this site to your screen</div><div class="alert-text">Open it like an app from your phone's home screen or your computer's desktop. One tap, no store.</div></div></a>
+    <a class="alert-card info click" href="checkup/" id="ov-biz"><div class="alert-icon">&#128188;</div><div class="alert-body"><div class="alert-title">Own a business in Paradise Valley? Get help with your business systems</div><div class="alert-text">Free to start. Talk to Bridgehead about your phones, your website, and the software you run on. By Bridgehead.</div></div></a>
   </div>
   <p class="note">Every figure on this site is fetched live from the source named beside it. Where a source is not available for Paradise Valley, the page says so.</p>
 </section>
@@ -231,13 +295,60 @@ html[data-theme="light"] #weather-canvas{display:none}
   <p class="note" id="fd-note"></p>
 </section>
 
+<section class="tab-section" id="tab-emergency">
+  <div class="section-head">Emergency &amp; Nearby <span class="count">Information only</span></div>
+  <div class="alert-card danger"><div class="alert-icon">&#128680;</div><div class="alert-body"><div class="alert-title">Life-threatening emergency? Call 911.</div><div class="alert-text">This page is information only. It is not an emergency service and cannot send help. If someone is in danger, call 911.</div></div></div>
+  <div class="grid2 em-nums" id="em-nums">
+    <a class="food-card" href="tel:911"><div class="food-name">911</div><div class="food-type">Police, fire, and medical emergencies</div></a>
+    <a class="food-card" href="tel:988"><div class="food-name">988</div><div class="food-type">Suicide &amp; Crisis Lifeline. Call or text.</div></a>
+    <a class="food-card" href="tel:18002221222"><div class="food-name">1-800-222-1222</div><div class="food-type">Poison Help. Free, any hour.</div></a>
+    <a class="food-card" href="tel:211"><div class="food-name">211</div><div class="food-type">Local help with food, housing, and bills, where available</div></a>
+  </div>
+  <p class="note"><a href="#radio" data-go="radio">Radio: where to tune for emergency information &rarr;</a></p>
+  <div class="section-head gap" style="font-size:1rem">Closest to you</div>
+  <div class="em-loc"><button class="chip" id="em-loc" type="button">Use my location</button><span class="note" id="em-ref">Sorted from the center of Paradise Valley.</span></div>
+  <div id="em-err"></div>
+  <div class="chips" id="em-chips" role="group" aria-label="Filter places"></div>
+  <div class="grid2" id="em-grid"><div class="food-card"><div class="food-type">Opens when you visit this tab&hellip;</div></div></div>
+  <p class="note" id="em-note"></p>
+</section>
+
+<section class="tab-section" id="tab-radio">
+  <div class="section-head">Radio <span class="count">Where to tune</span></div>
+  <p class="note" style="margin-top:0">When phones and the internet go down, a battery or crank radio still works. This dial shows where to tune, and plays a station's live stream when it has one. It cannot receive radio signals itself.</p>
+  <div class="rd">
+    <div class="rd-bands" role="group" aria-label="Radio band"><button class="rd-band" type="button" data-band="AM" aria-pressed="false">AM</button><button class="rd-band" type="button" data-band="FM" aria-pressed="false">FM</button><button class="rd-band" type="button" data-band="WX" aria-pressed="false">Weather</button></div>
+    <div class="rd-panel">
+      <div class="rd-window" id="rd-window" role="slider" tabindex="0" aria-label="Tuning dial. Use the left and right arrow keys." aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="">
+        <div id="rd-scale"></div><div id="rd-marks"></div><div class="rd-needle" id="rd-needle"></div><div class="rd-glass"></div>
+      </div>
+      <div class="rd-ctl">
+        <button class="rd-btn" type="button" id="rd-seekdn" aria-label="Seek the previous station">&#9664; Seek</button>
+        <button class="rd-btn rd-play" type="button" id="rd-play">Play</button>
+        <button class="rd-btn" type="button" id="rd-seekup" aria-label="Seek the next station">Seek &#9654;</button>
+        <label class="rd-vol">Volume <input type="range" id="rd-vol" min="0" max="100" value="80"></label>
+        <button class="rd-btn rd-small" type="button" id="rd-static" aria-pressed="true">Static: on</button>
+      </div>
+    </div>
+    <div class="rd-now" id="rd-now" role="status" aria-live="polite"></div>
+    <div class="grid2 rd-list" id="rd-list"></div>
+    <audio id="rd-audio" preload="none"></audio>
+  </div>
+  <p class="note" id="rd-note"></p>
+</section>
+
 <section class="tab-section" id="tab-stats">
   <div class="section-head">Statistics <span class="count">Live and public sources</span></div>
   <div class="section-head" style="font-size:1rem;margin-top:0">About Paradise Valley</div>
   <div class="grid3" id="st-facts"><div class="stat-card"><div class="lab">Loading&hellip;</div></div></div>
   <p class="note" id="st-facts-note"></p>
+  <div class="section-head gap" style="font-size:1rem">Income, age, and housing <span class="count" id="st-cen-year"></span></div>
+  <div class="grid3" id="st-census"></div>
+  <p class="note" id="st-census-note"></p>
   <div class="section-head gap" style="font-size:1rem">Public safety</div>
   <div id="st-crime"></div>
+  <div class="section-head gap" style="font-size:1rem">Yearly crime totals <span class="count">FBI Crime Data Explorer</span></div>
+  <div id="st-fbi"></div>
   <div class="section-head gap" style="font-size:1rem">Earthquakes, last 30 days</div>
   <div class="grid3" id="st-quake"></div>
   <div class="section-head gap" style="font-size:1rem">Wildfire incidents</div>
@@ -248,7 +359,8 @@ html[data-theme="light"] #weather-canvas{display:none}
 
 <aside class="sidebar" aria-label="Quick facts">
   <div class="sidebar-widget"><div class="widget-head">Right now</div><div class="widget-body" id="sb-now">Loading&hellip;</div></div>
-  <div class="sidebar-widget"><div class="widget-head">For local businesses</div><div class="widget-body">Request a free consult about your business systems.<a class="emerg-link" href="checkup/" style="margin-top:8px"><span>&#128188;</span>Request a free consult</a></div></div>
+  <div class="sidebar-widget" id="pwa-widget"><div class="widget-head">Save to your screen</div><div class="widget-body">Open this site like an app from your home screen or desktop.<a class="emerg-link" href="#save" id="pwa-btn" style="margin-top:8px"><span>&#128241;</span>Save to screen</a></div></div>
+  <div class="sidebar-widget"><div class="widget-head">For local businesses</div><div class="widget-body">Free to start. Ask Bridgehead about your business systems.<a class="emerg-link" href="checkup/" style="margin-top:8px"><span>&#128188;</span>Start here</a></div></div>
   <div class="sidebar-widget"><div class="widget-head">Sun &amp; moon</div><div class="widget-body" id="sb-sun">Loading&hellip;</div></div>
   <div class="sidebar-widget"><div class="widget-head">Emergency and official</div><div class="widget-body" id="sb-links"></div></div>
 </aside>
@@ -256,12 +368,17 @@ html[data-theme="light"] #weather-canvas{display:none}
 
 <footer>
   <p>Sources: National Weather Service (conditions, forecast, alerts); U.S. Geological Survey (earthquakes); national wildfire incident reporting (wildfire and prescribed burns);  OpenStreetMap contributors (places); Wikidata (city facts); Nager.Date (holidays).</p>
-  <p>Business owners: <a href="checkup/">request a free consult</a>, by Bridgehead.</p>
+  <p>Business owners: <a href="checkup/">get help with your business systems</a>, by Bridgehead.</p>
   <p>Police figures are published by the agency and are not confirmed crimes. Calls for service are reports that were dispatched, not findings. This site is not an emergency service and is not affiliated with any government agency. Information can be delayed, incomplete, or wrong. In an emergency, call 911.</p>
 </footer>
+<div class="pwa-dlg" id="pwa-dlg" role="dialog" aria-modal="true" aria-labelledby="pwa-t" hidden>
+  <div class="pwa-box"><button class="pwa-x" id="pwa-x" type="button" aria-label="Close">&times;</button>
+    <h2 id="pwa-t">Save to your screen</h2><div id="pwa-body"></div>
+    <p class="note">It opens in its own window with its own icon. Live data still needs the internet. If you are offline, the last page you saw is kept.</p></div>
+</div>
 <script>
 (function(){'use strict';
-var CFG={"city": "Paradise Valley", "st": "AZ", "lat": 33.531, "lng": -111.9426, "tz": "America/Phoenix", "quakeKm": 300, "fireMi": 150, "crime": null, "wiki": "Q983750", "links": [["Town of Paradise Valley", "https://www.paradisevalleyaz.gov/"], ["National Weather Service office", "https://www.weather.gov/psr/"]], "food": [-112.0026, 33.576, -111.8826, 33.486]};
+var CFG={"city": "Paradise Valley", "st": "AZ", "lat": 33.531, "lng": -111.9426, "tz": "America/Phoenix", "quakeKm": 300, "fireMi": 150, "crime": null, "wiki": "Q983750", "links": [["Town of Paradise Valley", "https://www.paradisevalleyaz.gov/"], ["National Weather Service office", "https://www.weather.gov/psr/"]], "food": [-112.0026, 33.576, -111.8826, 33.486], "near": [-112.1426, 33.681, -111.7426, 33.381], "stats": {"meta": {"censusYear": 2024, "censusLabel": "2020\u20132024 American Community Survey 5-year estimates", "fbiRefreshed": "10/15/2026", "fbiMax": "10/2026"}, "census": {"place": "Paradise Valley town, Arizona", "pop": 12611.0, "medAge": 55.8, "medIncome": 247159.0, "medIncomeMoe": 31482.0, "perCapita": 164581.0, "povertyPct": 5.5, "under18Pct": 18.2, "age65Pct": 32.7, "units": 5985.0, "vacantPct": 14.0, "ownerPct": 95.0, "renterPct": 5.0, "medValue": 2000001.0, "medValueMoe": null, "medRent": 3501.0, "medRentMoe": null, "hhSize": 2.44}, "fbi": {"agency": "Paradise Valley Police Department", "ori": "AZ0071900", "years": {"2019": {"violent": 10, "violentRate": 67.9, "property": 161, "propertyRate": 1092.8, "homicide": 0, "rape": 5, "robbery": 2, "assault": 3, "burglary": 35, "larceny": 119, "vehicle": 7}, "2020": {"violent": 15, "violentRate": 101.0, "property": 216, "propertyRate": 1453.7, "homicide": 0, "rape": 2, "robbery": 2, "assault": 11, "burglary": 31, "larceny": 175, "vehicle": 10}, "2021": {"violent": 9, "violentRate": 69.8, "property": 190, "propertyRate": 1473.4, "homicide": 0, "rape": 2, "robbery": 0, "assault": 7, "burglary": 41, "larceny": 138, "vehicle": 11}, "2022": {"violent": 14, "violentRate": 110.6, "property": 180, "propertyRate": 1421.5, "homicide": 0, "rape": 8, "robbery": 1, "assault": 5, "burglary": 40, "larceny": 130, "vehicle": 10}, "2023": {"violent": 4, "violentRate": 31.8, "property": 167, "propertyRate": 1329.0, "homicide": 0, "rape": 2, "robbery": 0, "assault": 2, "burglary": 50, "larceny": 111, "vehicle": 6}, "2024": {"violent": 10, "violentRate": 80.4, "property": 123, "propertyRate": 988.8, "homicide": 0, "rape": 3, "robbery": 2, "assault": 5, "burglary": 39, "larceny": 77, "vehicle": 7}, "2025": {"violent": 3, "violentRate": 24.0, "property": 76, "propertyRate": 608.8, "homicide": 0, "rape": 2, "robbery": 0, "assault": 1, "burglary": 10, "larceny": 64, "vehicle": 2}}, "compare": {"state": {"name": "Arizona", "violentRate": {"2019": 453.5, "2020": 483.7, "2021": 289.6, "2022": 450.5, "2023": 429.0, "2024": 433.6, "2025": 385.0}, "propertyRate": {"2019": 2448.2, "2020": 2251.8, "2021": 1577.3, "2022": 2150.3, "2023": 1896.1, "2024": 1799.2, "2025": 1542.6}}, "us": {"violentRate": {"2019": 381.0, "2020": 399.3, "2021": 360.8, "2022": 398.1, "2023": 385.5, "2024": 363.4, "2025": 329.6}, "propertyRate": {"2019": 2109.0, "2020": 1955.3, "2021": 1761.8, "2022": 1998.2, "2023": 1950.2, "2024": 1766.5, "2025": 1552.3}}}}}, "radio": {"stations": [{"band": "AM", "freq": 620, "name": "KTAR News", "note": "News", "stream": "https://bonneville.cdnstream1.com/2698_48.aac"}, {"band": "FM", "freq": 92.3, "name": "KTAR News", "note": "News", "stream": "https://bonneville.cdnstream1.com/2698_48.aac"}, {"band": "FM", "freq": 98.7, "name": "KMVP Arizona Sports", "note": "Sports talk", "stream": "https://bonneville.cdnstream1.com/2699_48.aac"}, {"band": "FM", "freq": 91.5, "name": "KJZZ", "note": "Public radio (NPR)", "stream": ""}], "wx": [{"call": "KEC94", "site": "South Mtn.", "freq": 162.55, "watts": 347, "mi": 15}, {"call": "WWG41", "site": "Mt. Ord", "freq": 162.425, "watts": 150, "mi": 40}], "county": "Maricopa County, Arizona", "asOf": "14 November 2026"}};
 var $=function(id){return document.getElementById(id)};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function store(k,v,sess){try{var s=sess?sessionStorage:localStorage;if(v===undefined)return s.getItem(k);s.setItem(k,v)}catch(e){return null}}
@@ -306,7 +423,7 @@ var loaded={};
 function switchTab(name){var ok=false;document.querySelectorAll('.nav-item').forEach(function(n){var on=n.getAttribute('data-tab')===name;n.classList.toggle('active',on);if(on)ok=true});if(!ok)name='overview';
   document.querySelectorAll('.tab-section').forEach(function(s){s.classList.toggle('active',s.id==='tab-'+name)});
   try{history.replaceState(null,'','#'+name)}catch(e){}
-  if(name==='food'&&!loaded.food){loaded.food=1;loadFood()}if(name==='community'&&!loaded.comm){loaded.comm=1;loadHolidays()}
+  if(name==='food'&&!loaded.food){loaded.food=1;loadFood()}if(name==='emergency'&&!loaded.em){loaded.em=1;loadNearby()}if(name==='radio'&&!loaded.rd){loaded.rd=1;radioInit()}if(name==='community'&&!loaded.comm){loaded.comm=1;loadHolidays()}
   window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('.nav-item[data-tab]').forEach(function(b){b.addEventListener('click',function(){switchTab(b.getAttribute('data-tab'))})});
 document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){switchTab(b.getAttribute('data-go'))})});
@@ -498,7 +615,7 @@ function renderCrime(c,r){
 function loadCrime(){
   var N=CFG.crime;
   if(!N){setCard('ov-safety','warn','Public safety','No public police data feed found for '+esc(CFG.city)+' yet.');
-    $('cr-sum').innerHTML='<div class="alert-card warn"><div class="alert-icon">\uD83D\uDCED</div><div class="alert-body"><div class="alert-title">No public crime data feed found for '+esc(CFG.city)+'</div><div class="alert-text">Police departments publish this data in different ways. I could not find a public, machine-readable feed for '+esc(CFG.city)+', so nothing is shown rather than anything made up. The official source is the city and its police department.</div></div></div>'+(CFG.links[0]?'<a class="alert-card info click" href="'+esc(CFG.links[0][1])+'" target="_blank" rel="noopener"><div class="alert-icon">\uD83C\uDFDB\uFE0F</div><div class="alert-body"><div class="alert-title">'+esc(CFG.links[0][0])+'</div><div class="alert-meta">Official site</div></div></a>':'');
+    $('cr-sum').innerHTML='<div class="alert-card warn"><div class="alert-icon">\uD83D\uDCED</div><div class="alert-body"><div class="alert-title">No public crime data feed found for '+esc(CFG.city)+'</div><div class="alert-text">Police departments publish this data in different ways. I could not find a public, machine-readable feed for '+esc(CFG.city)+', so nothing is shown rather than anything made up. The official source is the city and its police department.'+((CFG.stats||{}).fbi?' Yearly FBI totals are on the Statistics tab.':'')+'</div></div></div>'+(CFG.links[0]?'<a class="alert-card info click" href="'+esc(CFG.links[0][1])+'" target="_blank" rel="noopener"><div class="alert-icon">\uD83C\uDFDB\uFE0F</div><div class="alert-body"><div class="alert-title">'+esc(CFG.links[0][0])+'</div><div class="alert-meta">Official site</div></div></a>':'');
     $('cr-note').textContent='When a public feed exists, this tab fills in automatically once it is added.';return Promise.resolve()}
   errBox('cr-err','');
   var run;
@@ -529,7 +646,7 @@ function renderStats(){
     if(!r.dateOnly){var hb=hourBars(r.ev),m=Math.max.apply(null,hb.concat([1])),lab=['12\u20133 AM','3\u20136 AM','6\u20139 AM','9 AM\u201312','12\u20133 PM','3\u20136 PM','6\u20139 PM','9 PM\u201312'];
       c+='<div class="section-head gap" style="font-size:.95rem">By time of day <span class="count">Based on the '+num(r.ev.length)+' most recent reports</span></div><div class="bars">'+hb.map(function(n,i){return '<div class="bar"><span>'+lab[i]+'</span><span class="track"><span class="fill" style="display:block;width:'+Math.round(n/m*100)+'%"></span></span><span class="n">'+n+'</span></div>'}).join('')+'</div>'}
     c+='<p class="note">Source: '+esc(CFG.crime.agency)+', '+esc(CFG.crime.dataset)+'. Counts are '+esc(CFG.crime.label)+', not confirmed crimes.</p>'}
-  else if(!CFG.crime){c='<div class="alert-card warn"><div class="alert-icon">\uD83D\uDCED</div><div class="alert-body"><div class="alert-title">No public crime data feed found for '+esc(CFG.city)+'</div><div class="alert-text">Nothing is shown rather than anything made up.</div></div></div>'}
+  else if(!CFG.crime){var hasF=!!((CFG.stats||{}).fbi);c='<div class="alert-card warn"><div class="alert-icon">\uD83D\uDCED</div><div class="alert-body"><div class="alert-title">'+(hasF?'No live weekly police feed for '+esc(CFG.city):'No public crime data feed found for '+esc(CFG.city))+'</div><div class="alert-text">'+(hasF?'Weekly activity is not published in a form this site can read. Yearly FBI totals are shown below instead.':'Nothing is shown rather than anything made up.')+'</div></div></div>'}
   else c='<p class="note">Loading police data\u2026</p>';
   $('st-crime').innerHTML=c;
   if(Q.all){var a=Q.all,big=a.reduce(function(x,q){return q.mag>(x?x.mag:-9)?q:x},null),m3=a.filter(function(q){return q.mag>=3}).length;
@@ -583,6 +700,191 @@ function loadFood(){errBox('fd-err','');var key='food-'+CFG.city,c=store(key,und
     if(failed.length){errBox('fd-err','Some place types could not be loaded right now ('+failed.map(function(k){return k.replace(/_/g,' ')}).join(', ')+').',function(){loadFood()})}
     else store(key,JSON.stringify({at:Date.now(),v:out}),true)}).catch(function(){if(!out.length){$('fd-grid').innerHTML='';errBox('fd-err','Could not load local places right now.',function(){loadFood()})}})}
 
+/* ---------- emergency and nearby ---------- */
+var NEARKINDS=[['er','Emergency rooms'],['hospital','Other hospitals'],['urgent','Urgent care'],['pharmacy','Pharmacies'],['fire','Fire stations'],['police','Police stations']],
+  NEARQ=[['hospital','amenity','hospital'],['erq','q','emergency room'],['urgent','q','urgent care'],['pharmacy','amenity','pharmacy'],['fire','amenity','fire station'],['police','amenity','police']],
+  NEAR=[],emFilter='all',EMREF={lat:CFG.lat,lng:CFG.lng,user:false};
+var SING={er:'Emergency room',hospital:'Hospital',urgent:'Urgent care',pharmacy:'Pharmacy',fire:'Fire station',police:'Police station'};
+var SPECS={psychiatry:'Behavioral health',rehabilitation:'Rehabilitation',physiatry:'Rehabilitation',geriatrics:'Senior care',long_term_care:'Long-term care',orthopaedics:'Orthopedic',orthopedics:'Orthopedic'};
+function emDist(x){var d=miles(EMREF.lat,EMREF.lng,x.lat,x.lng);return (d<10?d.toFixed(1):Math.round(d))+' mi '+bearing(EMREF.lat,EMREF.lng,x.lat,x.lng)}
+function emRender(){NEAR.forEach(function(x){x.d=miles(EMREF.lat,EMREF.lng,x.lat,x.lng)});
+  $('em-chips').innerHTML=[['all','All']].concat(NEARKINDS).map(function(k){return '<button class="chip" type="button" data-k="'+k[0]+'" aria-pressed="'+(emFilter===k[0])+'">'+k[1]+'</button>'}).join('');
+  $('em-chips').querySelectorAll('button').forEach(function(b){b.onclick=function(){emFilter=b.getAttribute('data-k');emRender()}});
+  var list=[];
+  NEARKINDS.forEach(function(k){if(emFilter!=='all'&&emFilter!==k[0])return;var a=NEAR.filter(function(x){return x.kind===k[0]}).sort(function(p,q){return p.d-q.d});list=list.concat(a.slice(0,emFilter==='all'?(k[0]==='er'?5:3):12))});
+  var from=EMREF.user?'from you':'from the center of '+esc(CFG.city);
+  $('em-grid').innerHTML=list.length?list.map(function(x){var dest=x.lat+','+x.lng,kn=SING[x.kind]||'Place',tag='';
+    if(x.kind==='hospital')tag=(x.spec?' \u00B7 '+esc(x.spec):'')+' \u00B7 '+(x.emno?'No emergency room listed':'Emergency room not confirmed');
+    return '<div class="food-card"><div class="food-name">'+esc(x.name)+'</div><div class="food-type">'+esc(kn)+tag+(x.street?' \u00B7 '+esc(x.street):'')+'</div><div class="food-rating">'+esc(emDist(x))+' '+from+'</div>'+(x.phone?'<div class="food-type">'+esc(x.phone)+'</div>':'')+'<div class="em-dirs">Directions: <a href="https://www.google.com/maps/dir/?api=1&destination='+dest+'" target="_blank" rel="noopener">Google Maps</a> &middot; <a href="https://maps.apple.com/?daddr='+dest+'" target="_blank" rel="noopener">Apple Maps</a></div></div>'}).join(''):'<div class="food-card"><div class="food-type">Nothing found for this filter.</div></div>';
+  $('em-note').textContent=NEAR.length?'Distances are in a straight line, not drive time. Listings come from OpenStreetMap contributors and can be incomplete or out of date. Emergency rooms are the places tagged as having one. For other hospitals an emergency room is not confirmed, so call ahead. Hours are not shown. In an emergency, call 911.':''}
+function loadNearby(){errBox('em-err','');var key='near2-'+CFG.city,c=store(key,undefined,true);
+  if(c){try{var o=JSON.parse(c);if(Date.now()-o.at<6*3600000&&o.v.length){NEAR=o.v;emRender();return Promise.resolve()}}catch(e){}}
+  var b=CFG.near,seen={},out=[],failed=[],i=0,LBL={hospital:'hospitals',erq:'emergency rooms',urgent:'urgent care',pharmacy:'pharmacies',fire:'fire stations',police:'police stations'};
+  function one(k,again){var P={format:'jsonv2',addressdetails:'1',extratags:'1',limit:'40',bounded:'1',viewbox:b.join(',')};if(k[1]==='amenity')P.amenity=k[2];else P.q=k[2];
+    return getJSON('https://nominatim.openstreetmap.org/search?'+new URLSearchParams(P).toString(),20000).catch(function(){return again?new Promise(function(r){setTimeout(r,2500)}).then(function(){return one(k,false)}):null})}
+  function next(){if(i>=NEARQ.length)return Promise.resolve();var k=NEARQ[i++];
+    return new Promise(function(r){setTimeout(r,i>1?1200:0)}).then(function(){return one(k,true)}).then(function(a){
+      if(!a){failed.push(LBL[k[0]]);return}
+      a.forEach(function(x){var id=x.osm_type+x.osm_id,la=parseFloat(x.lat),lo=parseFloat(x.lon);if(seen[id]||!x.name||!isFinite(la)||!isFinite(lo))return;
+        var t=x.extratags||{},ad=x.address||{},kind=k[0];
+        if(k[0]==='urgent'&&!/urgent|immediate|walk-in|express|prompt/i.test(x.name))return;
+        if(k[0]==='erq'){if(!/emergency|\bER\b/i.test(x.name))return;kind='er'}
+        if(k[0]==='hospital')kind=t.emergency==='yes'?'er':'hospital';
+        seen[id]=1;out.push({name:x.name,kind:kind,lat:la,lng:lo,street:ad.road||'',phone:t.phone||t['contact:phone']||'',emno:t.emergency==='no',spec:SPECS[String(t['healthcare:speciality']||'').split(';')[0]]||''})});
+      NEAR=out.slice();emRender()}).then(next)}
+  return next().then(function(){if(!out.length)throw new Error('none');
+    if(failed.length){errBox('em-err','Some place types could not be loaded right now ('+failed.join(', ')+').',function(){loadNearby()})}
+    else store(key,JSON.stringify({at:Date.now(),v:out}),true)}).catch(function(){if(!out.length){$('em-grid').innerHTML='';errBox('em-err','Could not load nearby places right now.',function(){loadNearby()})}})}
+$('em-loc').onclick=function(){var r=$('em-ref');if(!navigator.geolocation){r.textContent='Your browser cannot share its location. Sorted from the center of '+CFG.city+'.';return}
+  r.textContent='Asking for your location\u2026';
+  navigator.geolocation.getCurrentPosition(function(p){EMREF={lat:p.coords.latitude,lng:p.coords.longitude,user:true};
+    var far=miles(CFG.lat,CFG.lng,EMREF.lat,EMREF.lng)>15;r.textContent='Sorted from where you are now. Your location stays on this device.'+(far?' You are outside the '+CFG.city+' area, so these are the closest places listed here.':'');emRender()},
+    function(){r.textContent='Your location was not shared. Sorted from the center of '+CFG.city+'.'},{enableHighAccuracy:false,timeout:12000,maximumAge:300000})};
+
+/* ---------- radio: an old-school tuning dial ---------- */
+var RADIO=CFG.radio||{stations:[],wx:[]},
+ BANDS={AM:{min:530,max:1700,base:530,step:10,snap:14,major:[[540,'54'],[600,'60'],[700,'70'],[800,'80'],[900,'90'],[1000,'100'],[1200,'120'],[1400,'140'],[1600,'160']],minor:50,fmt:function(f){return Math.round(f)+' AM'}},
+        FM:{min:87.7,max:108.1,base:87.9,step:0.2,snap:0.12,major:[[88,'88'],[92,'92'],[96,'96'],[100,'100'],[104,'104'],[108,'108']],minor:1,fmt:function(f){return f.toFixed(1)+' FM'}},
+        WX:{min:162.35,max:162.6,base:162.4,step:0.025,snap:0.0125,major:[[162.4,'162.40'],[162.45,'162.45'],[162.5,'162.50'],[162.55,'162.55']],minor:0.025,fmt:function(f){return f.toFixed(3)+' MHz'}}},
+ RD={band:'FM',f:98.1,st:null,drag:false,state:'idle'},PRE={AM:[],FM:[],WX:[]},rdAC=null,rdNS=null,rdNG=null,rdStatic=(store('rd-static')!=='0');
+function rdView(b){var l=PRE[b].slice();if(b==='WX')l.sort(function(a,c){return a.ord-c.ord});return l}
+function rdFirst(b){var l=PRE[b].slice().sort(function(a,c){return (a.ord||0)-(c.ord||0)});return l[0]}
+function rdPos(b,f){var d=BANDS[b];return (f-d.min)/(d.max-d.min)*100}
+function rdBuild(){PRE={AM:[],FM:[],WX:[]};
+  (RADIO.stations||[]).forEach(function(s,i){if(PRE[s.band])PRE[s.band].push({name:s.name,freq:s.freq,note:s.note||'',stream:s.stream||'',band:s.band,ord:i})});
+  (RADIO.wx||[]).forEach(function(w,i){if(!PRE.WX.some(function(x){return Math.abs(x.freq-w.freq)<0.001}))PRE.WX.push({wx:true,name:'NOAA Weather Radio',site:w.site,call:w.call,freq:w.freq,watts:w.watts,mi:w.mi,band:'WX',ord:i})});
+  Object.keys(PRE).forEach(function(k){PRE[k].sort(function(a,b){return a.freq-b.freq})})}
+function rdScale(){var b=BANDS[RD.band],h='';
+  for(var f=Math.ceil(b.min/b.minor)*b.minor;f<=b.max+1e-9;f+=b.minor){var maj=b.major.some(function(m){return Math.abs(m[0]-f)<b.minor/2});h+='<span class="rd-tick'+(maj?' maj':'')+'" style="left:'+rdPos(RD.band,f).toFixed(2)+'%"></span>'}
+  b.major.forEach(function(m){var pc=rdPos(RD.band,m[0]);h+='<span class="rd-lab" style="left:'+pc.toFixed(2)+'%;transform:translateX('+(pc<6?'-8%':pc>94?'-92%':'-50%')+')">'+esc(m[1])+'</span>'});
+  $('rd-scale').innerHTML=h;
+  $('rd-marks').innerHTML=PRE[RD.band].map(function(p){return '<span class="rd-mark" style="left:'+rdPos(RD.band,p.freq).toFixed(2)+'%"></span>'}).join('')}
+function rdNear(b,f,mult){var best=null,d=BANDS[b].snap*(mult||1);PRE[b].forEach(function(p){var x=Math.abs(p.freq-f);if(x<=d){best=p;d=x}});return best}
+function rdAudio(){return $('rd-audio')}
+function rdStop(){var a=rdAudio();try{a.pause();a.removeAttribute('src');a.load()}catch(e){}RD.state='idle'}
+function rdText(){var p=RD.st,el=$('rd-now'),b=BANDS[RD.band],city=esc(CFG.city);
+  if(!p){el.innerHTML='<b>Between stations.</b> Drag the needle, or press Seek.';return}
+  if(p.wx){el.innerHTML='<b>NOAA Weather Radio</b> \u00B7 '+esc(p.site)+' ('+esc(p.call)+') \u00B7 '+p.freq.toFixed(3)+' MHz<br>This is a radio signal only, so this page cannot play it. Set a weather radio or scanner to this frequency. The transmitter is about '+esc(p.mi)+' miles from '+city+' and runs '+esc(p.watts)+' watts. <a href="https://www.weather.gov/nwr/" target="_blank" rel="noopener">About NOAA Weather Radio</a>';return}
+  var line='<b>'+esc(p.name)+'</b> \u00B7 '+esc(b.fmt(p.freq))+(p.note?' \u00B7 '+esc(p.note):'');
+  if(!p.stream){el.innerHTML=line+'<br>No public stream found for this station. Tune a battery or crank radio to '+esc(b.fmt(p.freq))+'.';return}
+  var s=RD.state==='playing'?'Playing live.':RD.state==='loading'?'Connecting\u2026':RD.state==='error'?'This stream could not play here. Some stations block outside players. Tune a radio to '+esc(b.fmt(p.freq))+' instead.':'Press Play to listen live.';
+  el.innerHTML=line+'<br>'+s}
+function rdCards(){var list=rdView(RD.band);
+  $('rd-list').innerHTML=list.length?list.map(function(p,i){var f=BANDS[RD.band].fmt(p.freq);
+    return '<button type="button" class="food-card rd-card" data-i="'+i+'" aria-pressed="'+(RD.st===p)+'"><div class="food-name">'+esc(p.wx?'Weather radio, '+p.site:p.name)+'</div><div class="food-type">'+esc(f)+(p.wx?' \u00B7 '+esc(p.call):(p.note?' \u00B7 '+esc(p.note):''))+'</div><div class="rd-tags"><span class="rd-tag">'+(p.stream?'Live stream':'Radio only')+'</span>'+(p.wx&&p.ord===0?'<span class="rd-tag">Nearest</span>':'')+'</div></button>'}).join(''):'<div class="food-card"><div class="food-type">No stations listed on this band for '+esc(CFG.city)+'.</div></div>';
+  $('rd-list').querySelectorAll('.rd-card').forEach(function(b){b.onclick=function(){rdSelect(rdView(RD.band)[+b.getAttribute('data-i')],true)}})}
+function rdTune(f,anim){var b=BANDS[RD.band];f=Math.min(b.max,Math.max(b.min,f));f=b.base+Math.round((f-b.base)/b.step)*b.step;f=Math.min(b.max,Math.max(b.min,f));if(RD.band==='FM')f=Math.round(f*10)/10;if(RD.band==='WX')f=Math.round(f*1000)/1000;
+  RD.f=f;var n=$('rd-needle');n.style.left=rdPos(RD.band,f).toFixed(2)+'%';
+  var p=rdNear(RD.band,f,1);if(p!==RD.st){if(RD.st&&RD.st.stream&&p!==RD.st)rdStop();RD.st=p}
+  var w=$('rd-window');w.setAttribute('aria-valuenow',Math.round(rdPos(RD.band,f)));w.setAttribute('aria-valuetext',RD.st?b.fmt(f)+', '+(RD.st.wx?'weather radio '+RD.st.site:RD.st.name):b.fmt(f)+', between stations');
+  rdText();rdCards()}
+function rdSelect(p,play){RD.f=p.freq;RD.st=null;rdTune(p.freq);RD.st=p;rdText();rdCards();if(play)rdStart(p)}
+function rdStart(p){if(!p||!p.stream){rdStop();rdText();return}
+  var a=rdAudio();a.volume=(+$('rd-vol').value||0)/100;a.src=p.stream;RD.state='loading';rdText();
+  var pr;try{pr=a.play()}catch(e){RD.state='error';rdText();return}
+  if(pr&&pr.catch)pr.catch(function(){if(RD.st===p&&RD.state==='loading'){RD.state='error';rdText()}})}
+function rdSeek(dir){var l=PRE[RD.band];if(!l.length)return;var cur=RD.st?l.indexOf(RD.st):-1,i;
+  if(cur>-1)i=(cur+dir+l.length)%l.length;else{var cand=dir>0?l.filter(function(p){return p.freq>RD.f}):l.filter(function(p){return p.freq<RD.f});i=l.indexOf(dir>0?(cand[0]||l[0]):(cand[cand.length-1]||l[l.length-1]))}
+  rdNoise(true);setTimeout(function(){rdNoise(false)},420);rdSelect(l[i],true)}
+function rdNoise(on){if(on&&!rdStatic)return;try{if(!rdAC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return;rdAC=new C();var n=rdAC.sampleRate*2,buf=rdAC.createBuffer(1,n,rdAC.sampleRate),d=buf.getChannelData(0);for(var i=0;i<n;i++)d[i]=Math.random()*2-1;rdNS=rdAC.createBufferSource();rdNS.buffer=buf;rdNS.loop=true;rdNG=rdAC.createGain();rdNG.gain.value=0;rdNS.connect(rdNG);rdNG.connect(rdAC.destination);rdNS.start()}
+  if(rdAC.state==='suspended')rdAC.resume();rdNG.gain.setTargetAtTime(on?0.035:0,rdAC.currentTime,0.05)}catch(e){}}
+function rdBand(b){rdStop();RD.band=b;RD.st=null;document.querySelectorAll('.rd-band').forEach(function(x){x.setAttribute('aria-pressed',x.getAttribute('data-band')===b)});rdScale();
+  var f=PRE[b].length?rdFirst(b):null;if(f)rdSelect(f,false);else{RD.f=(BANDS[b].min+BANDS[b].max)/2;rdTune(RD.f)}}
+function radioInit(){rdBuild();
+  var first=PRE.FM.length?'FM':PRE.AM.length?'AM':'WX';
+  document.querySelectorAll('.rd-band').forEach(function(x){x.onclick=function(){rdBand(x.getAttribute('data-band'))}});
+  var W=$('rd-window'),needle=$('rd-needle');
+  function fx(x){var r=W.getBoundingClientRect(),b=BANDS[RD.band],t=Math.min(1,Math.max(0,(x-r.left)/(r.width||1)));return b.min+t*(b.max-b.min)}
+  W.addEventListener('pointerdown',function(e){RD.drag=true;try{W.setPointerCapture(e.pointerId)}catch(x){}needle.classList.add('drag');rdTune(fx(e.clientX));rdNoise(true);if(e.preventDefault)e.preventDefault()});
+  W.addEventListener('pointermove',function(e){if(RD.drag)rdTune(fx(e.clientX))});
+  function up(){if(!RD.drag)return;RD.drag=false;needle.classList.remove('drag');rdNoise(false);var p=rdNear(RD.band,RD.f,2);if(p)rdSelect(p,true)}
+  W.addEventListener('pointerup',up);W.addEventListener('pointercancel',up);
+  W.addEventListener('keydown',function(e){var b=BANDS[RD.band],k=e.key,m=e.shiftKey?5:1;
+    if(k==='ArrowRight'||k==='ArrowUp'){rdTune(RD.f+b.step*m)}else if(k==='ArrowLeft'||k==='ArrowDown'){rdTune(RD.f-b.step*m)}else if(k==='Home'){rdTune(b.min)}else if(k==='End'){rdTune(b.max)}else if(k==='PageUp'){rdSeek(1)}else if(k==='PageDown'){rdSeek(-1)}else if(k==='Enter'||k===' '){$('rd-play').click()}else return;e.preventDefault()});
+  $('rd-seekup').onclick=function(){rdSeek(1)};$('rd-seekdn').onclick=function(){rdSeek(-1)};
+  $('rd-play').onclick=function(){var a=rdAudio();if(RD.st&&RD.st.stream&&(a.paused||!a.getAttribute('src'))){rdStart(RD.st)}else{rdStop();rdText()}};
+  $('rd-vol').oninput=function(){rdAudio().volume=(+this.value||0)/100};
+  var sb=$('rd-static');sb.setAttribute('aria-pressed',rdStatic);sb.textContent='Static: '+(rdStatic?'on':'off');
+  sb.onclick=function(){rdStatic=!rdStatic;store('rd-static',rdStatic?'1':'0');sb.setAttribute('aria-pressed',rdStatic);sb.textContent='Static: '+(rdStatic?'on':'off')};
+  var a=rdAudio();a.addEventListener('playing',function(){RD.state='playing';rdText();$('rd-play').textContent='Pause'});a.addEventListener('waiting',function(){if(RD.st&&RD.st.stream){RD.state='loading';rdText()}});
+  a.addEventListener('pause',function(){$('rd-play').textContent='Play';if(RD.state==='playing')RD.state='idle';rdText()});a.addEventListener('error',function(){if(RD.st&&RD.st.stream&&a.getAttribute('src')){RD.state='error';rdText();$('rd-play').textContent='Play'}});
+  $('rd-note').textContent='Stations are examples from public sources and the list is not complete. Streams play directly from each station\'s own public address, so they need the internet and some stations block outside players. Weather radio transmitters come from the National Weather Service list for '+(RADIO.county||'this county')+' (checked '+(RADIO.asOf||'')+'). Reception depends on distance and terrain.';
+  rdBand(first)}
+
+/* ---------- save to your screen ---------- */
+var deferredInstall=null;
+function standalone(){return (window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true}
+function pwaPlatform(){var u=navigator.userAgent||'',pl=navigator.platform||'';
+  if(/iPhone|iPad|iPod/.test(u)||(pl==='MacIntel'&&navigator.maxTouchPoints>1))return 'ios';
+  if(/Android/.test(u))return 'android';
+  if(/Firefox\//.test(u))return 'firefox';
+  if(/Edg\//.test(u))return 'edge';
+  if(/Chrome\//.test(u))return 'chrome';
+  if(/Safari\//.test(u)&&/Macintosh/.test(u))return 'safari';
+  return 'other'}
+var PWA_STEPS={
+  ios:['Tap the Share button (the square with an arrow pointing up).','Scroll down and tap Add to Home Screen.','Tap Add. The icon appears on your home screen.'],
+  android:['Tap the menu button (three dots) in your browser.','Tap Install app, or Add to Home screen.','Tap Install. The icon appears on your home screen.'],
+  chrome:['Click the install icon at the right end of the address bar (a monitor with a down arrow), then click Install.','Or open the menu (three dots), then Cast, save and share, then Install page as app.','For a plain desktop shortcut instead: menu, Cast, save and share, Create shortcut, and tick Open as window.'],
+  edge:['Open the menu (three dots at the top right).','Choose Apps, then Install this site as an app.','Click Install. Choose whether to pin it to your taskbar or desktop.'],
+  safari:['Open the File menu in Safari.','Choose Add to Dock. (Safari 17 or newer.)'],
+  firefox:['Firefox on a computer cannot install sites as apps. Bookmark this page with Ctrl+D (Windows) or Command+D (Mac).','On an Android phone, open the Firefox menu and tap Install.'],
+  other:['Open your browser\'s menu and look for Install, Add to Home screen, or Add to Dock.','If you do not see one, bookmark this page instead.']};
+var PWA_NAMES={ios:'iPhone or iPad',android:'Android',chrome:'Chrome on a computer',edge:'Microsoft Edge',safari:'Safari on a Mac',firefox:'Firefox',other:'Other browsers'};
+function pwaList(k){return '<ol>'+PWA_STEPS[k].map(function(s){return '<li>'+esc(s)+'</li>'}).join('')+'</ol>'}
+var pwaFrom=null;
+function pwaOpen(from){pwaFrom=from||null;var me=pwaPlatform(),html='';
+  if(deferredInstall)html+='<button class="pwa-go" id="pwa-go" type="button">Install now</button><p class="note" style="margin:0 0 8px">Or follow the steps below.</p>';
+  html+='<div><b>'+esc(PWA_NAMES[me])+'</b></div>'+pwaList(me);
+  html+='<details><summary>Other devices</summary>'+Object.keys(PWA_STEPS).filter(function(k){return k!==me}).map(function(k){return '<div style="margin-top:8px"><b>'+esc(PWA_NAMES[k])+'</b></div>'+pwaList(k)}).join('')+'</details>';
+  $('pwa-body').innerHTML=html;$('pwa-dlg').hidden=false;
+  var go=$('pwa-go');if(go)go.onclick=function(){var d=deferredInstall;deferredInstall=null;d.prompt();if(d.userChoice)d.userChoice.then(function(){pwaClose()},function(){})};
+  $('pwa-x').focus()}
+function pwaClose(){$('pwa-dlg').hidden=true;if(pwaFrom&&pwaFrom.focus)try{pwaFrom.focus()}catch(e){}}
+['pwa-card','pwa-btn'].forEach(function(id){var el=$(id);if(el)el.addEventListener('click',function(e){e.preventDefault();pwaOpen(el)})});
+$('pwa-x').onclick=pwaClose;
+$('pwa-dlg').addEventListener('click',function(e){if(e.target===$('pwa-dlg'))pwaClose()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('pwa-dlg').hidden)pwaClose()});
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredInstall=e});
+function pwaHide(){['pwa-card','pwa-widget'].forEach(function(id){var el=$(id);if(el)el.hidden=true})}
+window.addEventListener('appinstalled',function(){deferredInstall=null;pwaHide();pwaClose()});
+if(standalone())pwaHide();
+if('serviceWorker' in navigator&&window.isSecureContext){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+
+/* ---------- census profile and FBI yearly totals (fixed figures baked in at build time) ---------- */
+function usd(n){return n==null?'\u2014':'$'+Math.round(n).toLocaleString('en-US')}
+function pc(n){return n==null?'\u2014':n.toFixed(1).replace(/\.0$/,'')+'%'}
+function renderCensus(){var S=CFG.stats||{},c=S.census,M=S.meta||{};if(!c){$('st-census').innerHTML='<div class="stat-card"><div class="lab">No Census profile available for this area.</div></div>';return}
+  function card(big,lab,sub){return '<div class="stat-card"><div class="big">'+big+'</div><div class="lab">'+esc(lab)+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>'}
+  var val=c.medValue!=null&&c.medValue>=2000001?'$2,000,000 or more':usd(c.medValue);
+  $('st-cen-year').textContent=M.censusLabel||'';
+  $('st-census').innerHTML=
+    card(num(c.pop),'People (estimate)','Under 18: '+pc(c.under18Pct)+' \u00B7 65 and over: '+pc(c.age65Pct))+
+    card(c.medAge==null?'\u2014':String(c.medAge),'Median age')+
+    card(usd(c.medIncome),'Median household income',c.medIncomeMoe?'Margin of error \u00B1'+usd(c.medIncomeMoe):'')+
+    card(usd(c.perCapita),'Income per person')+
+    card(pc(c.povertyPct),'Below the poverty line')+
+    card(num(c.units),'Housing units',pc(c.vacantPct)+' vacant'+(c.hhSize?' \u00B7 '+c.hhSize+' people per household':''))+
+    card(pc(c.ownerPct),'Homes lived in by owners',pc(c.renterPct)+' rented')+
+    card(val,'Median home value',c.medValueMoe&&c.medValue<2000001?'Margin of error \u00B1'+usd(c.medValueMoe):'')+
+    card(usd(c.medRent)+'<span style="font-size:.8rem;font-weight:400"> /mo</span>','Median rent',c.medRentMoe?'Margin of error \u00B1'+usd(c.medRentMoe):'');
+  $('st-census-note').innerHTML='Source: U.S. Census Bureau, '+esc(M.censusLabel||'American Community Survey')+', for '+esc(c.place)+'. These are survey estimates with margins of error, not a head count. They are fixed figures and are updated about once a year.'+(S.censusNote?' '+esc(S.censusNote):'')}
+function renderFbi(){var S=CFG.stats||{},f=S.fbi,M=S.meta||{},el=$('st-fbi');
+  if(!f){el.innerHTML='<div class="alert-card info"><div class="alert-icon">\uD83D\uDCCA</div><div class="alert-body"><div class="alert-title">No matching yearly FBI totals for '+esc(CFG.city)+'</div><div class="alert-text">'+esc(S.fbiNone||'No single police agency reports totals that match this area. Nothing is shown rather than a number that would not describe it.')+'</div></div></div>';return}
+  var ys=Object.keys(f.years).sort().reverse(),L=f.years[ys[0]],cmp=f.compare||{},st=cmp.state||{},us=cmp.us||{};
+  function card(big,lab,sub){return '<div class="stat-card"><div class="big">'+big+'</div><div class="lab">'+esc(lab)+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>'}
+  function vs(key){var a=(st[key]||{})[ys[0]],b=(us[key]||{})[ys[0]];return (a!=null?esc(st.name)+' '+Math.round(a).toLocaleString('en-US'):'')+(a!=null&&b!=null?' \u00B7 ':'')+(b!=null?'United States '+Math.round(b).toLocaleString('en-US'):'')}
+  var h='<div class="grid2">'+
+    card(num(L.violent),'Violent crimes reported, '+ys[0],(L.violentRate!=null?Math.round(L.violentRate).toLocaleString('en-US')+' per 100,000 people<br>':'')+vs('violentRate'))+
+    card(num(L.property),'Property crimes reported, '+ys[0],(L.propertyRate!=null?Math.round(L.propertyRate).toLocaleString('en-US')+' per 100,000 people<br>':'')+vs('propertyRate'))+'</div>';
+  h+='<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Year</th><th>Violent</th><th>Per 100k</th><th>Property</th><th>Per 100k</th></tr></thead><tbody>'+ys.map(function(y,i){var r=f.years[y];return '<tr'+(i===0?' class="latest"':'')+'><td>'+esc(y)+'</td><td>'+num(r.violent)+'</td><td>'+(r.violentRate==null?'\u2014':Math.round(r.violentRate).toLocaleString('en-US'))+'</td><td>'+num(r.property)+'</td><td>'+(r.propertyRate==null?'\u2014':Math.round(r.propertyRate).toLocaleString('en-US'))+'</td></tr>'}).join('')+'</tbody></table></div>';
+  var parts=[['homicide','Homicide'],['rape','Rape'],['robbery','Robbery'],['assault','Aggravated assault'],['burglary','Burglary'],['larceny','Larceny and theft'],['vehicle','Motor vehicle theft']].filter(function(k){return L[k[0]]!=null}),
+      mx=Math.max.apply(null,parts.map(function(k){return L[k[0]]}).concat([1]));
+  h+='<div class="section-head gap" style="font-size:.95rem">By type, '+esc(ys[0])+'</div><div class="bars">'+parts.map(function(k){return '<div class="bar"><span>'+k[1]+'</span><span class="track"><span class="fill" style="display:block;width:'+Math.round(L[k[0]]/mx*100)+'%"></span></span><span class="n">'+num(L[k[0]])+'</span></div>'}).join('')+'</div>';
+  var all=[],mn=+ys[ys.length-1],mxy=+ys[0];for(var y=mn;y<=mxy;y++)if(!f.years[String(y)])all.push(y);var lo=2019;for(var y2=lo;y2<mn;y2++)all.unshift(y2);
+  h+='<p class="note">Source: FBI Crime Data Explorer, '+esc(f.agency)+' (FBI identifier '+esc(f.ori)+'), refreshed '+esc(M.fbiRefreshed||'')+'. Per 100k means per 100,000 people. These are crimes reported to police, not confirmed convictions, and not every crime is reported. Per-100,000 rates use the FBI\'s own population figure for the agency. Police agencies moved to a new FBI reporting system between 2019 and 2022, which can change counts from year to year.'+(all.length?' Left out because the agency did not report all 12 months: '+esc(all.join(', '))+'.':'')+(S.fbiNote?' '+esc(S.fbiNote):'')+'</p>';
+  el.innerHTML=h}
+
 /* ---------- scheduling ---------- */
 var EVERY={wx:300000,qk:600000,fire:900000,crime:1800000},LAST={};
 var LOAD={wx:loadWeather,qk:loadQuakes,fire:loadFire,crime:loadCrime};
@@ -593,7 +895,7 @@ window.addEventListener('online',function(){runAll(true)});
 setInterval(function(){if(!document.hidden)runAll(false)},60000);
 renderSrcs();renderGov();renderSun();setInterval(renderSun,600000);
 var h0=location.hash.slice(1);if(h0&&h0!=='overview')switchTab(h0);
-loadFacts();runAll(true);
+renderCensus();renderFbi();loadFacts();runAll(true);
 })();
 
 </script>

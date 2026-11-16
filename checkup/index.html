@@ -48,10 +48,10 @@ label{display:block;font-size:14px;font-weight:700;color:var(--mute);margin:8px 
 .code{white-space:pre;overflow:auto;max-height:200px;font:11px/1.35 Consolas,Menlo,monospace;background:var(--chip);padding:8px;border-radius:8px}
 .drop{border:2px dashed var(--line);border-radius:12px;padding:20px;text-align:center;color:var(--mute);cursor:pointer}
 .hide{display:none}
-</style>
+.cfg-wait main{display:none}.cfg-wait header small{visibility:hidden}#cfgLoading{display:none}.cfg-wait #cfgLoading{display:block}</style>
 </head>
-<body>
-<header><div style="flex:1"><small>Free · 2 minutes · nothing to install</small><b>Bridgehead Checkup</b></div><button class="btn s" id="themeBtn" title="Light / dark">◐</button></header>
+<body><script>document.body.classList.add('cfg-wait');setTimeout(function(){document.body.classList.remove('cfg-wait')},7000)</script>
+<header><div style="flex:1"><small>Free · 2 minutes · nothing to install</small><b>Bridgehead Checkup</b></div><button class="btn s" id="themeBtn" title="Light / dark">◐</button></header><p id="cfgLoading" class="note" style="padding:20px 16px">Loading…</p>
 <main>
 
 <div id="v-start">
@@ -130,7 +130,7 @@ label{display:block;font-size:14px;font-weight:700;color:var(--mute);margin:8px 
   <p class="note" style="margin-top:18px">Bridgehead Checkup is an informational tool, not antivirus and not a security or savings guarantee. Results and estimates are general and based on what you entered and what this device reports. Suggestions are settings you control — make changes only if you're comfortable, or ask someone you trust. Provided as-is.</p>
 </div>
 
-</main>
+<p id="legalLinks" class="note" style="margin:18px 0 4px"></p></main>
 <script type="text/plain" id="c-win"># Bridgehead Check v4 - Windows 7 / 8 / 10 / 11 - READ-ONLY - live results
 # Collects: OS version, installed program names, running process names, COUNTS of data-file types on every local and mapped drive.
 # Never collects: file names, file contents, passwords, customer data, or panel codes. Stops itself after 15 minutes.
@@ -354,12 +354,12 @@ const OWNER_NAME = 'Wayne Jordan';
 const OWNER_EMAIL = 'bridgeheadlink@gmail.com';
 const SCAN_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwSIBYW2NrjVgth6tiSDrGC6gOvTzn2vVtxLsbIs21TJn5G8Zshmb5jdOC4eqQSHlnrRQ/exec';   /* the web app address from the Apps Script setup. Blank = email only. */
 const SCAN_TOKEN = 'bh-bdae4202b41d2bdd0385';   /* must match TOKEN in the Apps Script */
-const REQUEST_MODE = 'consult';   /* 'minimal' sends contact details only. 'full' also sends answers, results, and scan. 'consult' is a contact form only, with no tests. */
+let REQUEST_MODE = 'consult';   /* fallback launch level. 'consult' = contact form only. 'minimal' = contact details only. 'full' = also answers, results, scan. The Settings tab in the Google sheet overrides this. */
 const NOTICE_REQUIRED = true;   /* true: the Send button stays closed until PRIVACY_URL is filled in */
-const PRIVACY_URL = '';   /* address of your privacy notice */
-const TERMS_URL = '';   /* address of your terms */
-const NOTICE_VERSION = 'draft-1';   /* recorded with each request. Change it when the notice or consent wording changes. */
-const CONSENT_TEXT = 'I agree that Bridgehead may store what I send here and contact me about my request, as described in the privacy notice and terms.';   /* DRAFT wording for your attorney to approve */
+let PRIVACY_URL = '';   /* fallback privacy notice address. The Settings tab overrides it. */
+let TERMS_URL = '';   /* fallback terms address. The Settings tab overrides it. */
+let NOTICE_VERSION = 'draft-1';   /* fallback notice version. The Settings tab overrides it. */
+let CONSENT_TEXT = 'I agree that Bridgehead may store what I send here and contact me about my request, as described in the privacy notice and terms.';   /* fallback wording. The Settings tab overrides it. DRAFT for your attorney to approve. */
 /* =================================================== */
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -657,12 +657,27 @@ function PS_code(){const s=PS.site;return{p:PS.ph,w:s?{a:+s.a,w:s.w===null?null:
 function psInit(){
  if(/iPhone|iPad|Android/.test(navigator.userAgent)){$('devH').textContent='Your phone, at a glance';$('psPhoneAuto').textContent='This device: '+DEV.os+(DEV.brOld?'. Its browser is out of date.':'.')+' The answers below cover the things a browser cannot see.'}
  else{$('psPhoneAuto').textContent='You are on a computer. For the automatic checks (system version, browser), open this page on your phone too. You can answer the four questions below from here.'}
- psPhoneQs();if(PS.url)$('psUrl').value=PS.url;psSiteRes();psQuick();$('psRun').onclick=psRunSite;reqInit();$('psLink').classList.toggle('hide',PQ.some(q=>PS.ph[q.id]!=null)||!!PS.site)}
+ psPhoneQs();if(PS.url)$('psUrl').value=PS.url;psSiteRes();psQuick();$('psRun').onclick=psRunSite;cfgBoot().then(reqInit);$('psLink').classList.toggle('hide',PQ.some(q=>PS.ph[q.id]!=null)||!!PS.site)}
 /* BHC-PS-END */
 /* BHC-REQ-BEGIN: send a request to the Drive collector. Modes: minimal (default), full, consult. */
-let REQ_ID=null,SENDING=false;
+let REQ_ID=null,SENDING=false,REQ_OPEN=null;
 function cap(a,n){return (a||[]).slice(0,n||400).map(x=>String(x).slice(0,120))}
 function noticeOk(){return !NOTICE_REQUIRED||!!PRIVACY_URL}
+function reqOpen(){if(!SCAN_ENDPOINT)return false;if(REQ_OPEN!==null)return REQ_OPEN;return noticeOk()}
+function cfgClean(c){if(!c||typeof c!=='object')return null;
+ const u=x=>(typeof x==='string'&&x.length<=300&&/^https:\/\/[^\s<>"']+$/.test(x))?x:'';
+ return{open:c.open===true,level:['consult','minimal','full'].indexOf(c.level)>-1?c.level:null,privacyUrl:u(c.privacyUrl),termsUrl:u(c.termsUrl),
+  version:typeof c.version==='string'?c.version.slice(0,40):'',consentText:typeof c.consentText==='string'?c.consentText.slice(0,500):''}}
+function cfgApply(o){if(o.level)REQUEST_MODE=o.level;PRIVACY_URL=o.privacyUrl;TERMS_URL=o.termsUrl;if(o.version)NOTICE_VERSION=o.version;if(o.consentText)CONSENT_TEXT=o.consentText;REQ_OPEN=!!(o.open&&o.privacyUrl)}
+function cfgBoot(){return new Promise(res=>{let finished=false;const c=new AbortController();
+ const finish=()=>{if(finished)return;finished=true;clearTimeout(t);document.body.classList.remove('cfg-wait');res()};
+ const t=setTimeout(()=>{try{c.abort()}catch(e){}finish()},3500);
+ if(!SCAN_ENDPOINT){finish();return}
+ fetch(SCAN_ENDPOINT+(SCAN_ENDPOINT.indexOf('?')>-1?'&':'?')+'config=1',{signal:c.signal,redirect:'follow'})
+  .then(r=>{if(!r.ok)throw new Error('http');return r.json()})
+  .then(j=>{if(finished)return;const o=cfgClean(j&&j.config);if(o)cfgApply(o)})
+  .catch(()=>{}).then(finish)})}
+function legalLinks(){const a=[];if(PRIVACY_URL)a.push('<a href="'+esc(PRIVACY_URL)+'" target="_blank" rel="noopener">Privacy notice</a>');if(TERMS_URL)a.push('<a href="'+esc(TERMS_URL)+'" target="_blank" rel="noopener">Terms</a>');const e=$('legalLinks');if(e)e.innerHTML=a.join(' &middot; ')}
 function consentHtml(){const p=PRIVACY_URL?'<a href="'+esc(PRIVACY_URL)+'" target="_blank" rel="noopener">privacy notice</a>':'privacy notice',t=TERMS_URL?'<a href="'+esc(TERMS_URL)+'" target="_blank" rel="noopener">terms</a>':'terms';return esc(CONSENT_TEXT).replace('privacy notice',p).replace('terms',t)}
 function consentRec(){return{accepted:true,text:CONSENT_TEXT,version:NOTICE_VERSION,at:new Date().toISOString()}}
 function reqId(){return REQ_ID||(REQ_ID='r'+Date.now().toString(36)+Math.random().toString(36).slice(2,10))}
@@ -713,6 +728,7 @@ function sendConsult(){if(SENDING)return;const m=h=>{$('cMsg').innerHTML=h};
  postReq(JSON.stringify(consultPayload(reqId()))).then(ref=>okCard(ref,$('c_email').value.trim()||$('c_phone').value.trim(),'consultBox','consultBox'))
   .catch(e=>{SENDING=false;$('cBtn').disabled=false;m('<p class="note" style="color:var(--bad)">'+esc(failText(e&&e.message))+' You can try again.</p>')})}
 function reqInit(){
+ legalLinks();
  if(REQUEST_MODE==='consult'){
   document.querySelectorAll('#v-start .hero button,#resumeNote,#psBox,#psLink').forEach(e=>e.classList.add('hide'));
   document.title='Bridgehead · Request a free consult';const sm=document.querySelector('header small');if(sm)sm.textContent='Free consult';
@@ -720,11 +736,11 @@ function reqInit(){
   h.querySelector('p').textContent='Request a free consult. Nothing is tested, scanned, or sent about your systems. A person will contact you.';
   const note=h.querySelector('p.note:last-of-type');if(note)note.textContent='Your details are sent only when you press Request my consult.';
   $('consultBox').hidden=false;
-  if(!SCAN_ENDPOINT||!noticeOk()){$('consultBox').innerHTML='<h2>Request a free consult</h2><p>Online requests open once our privacy notice is posted. For now, email us at <a href="mailto:'+esc(OWNER_EMAIL)+'">'+esc(OWNER_EMAIL)+'</a>.</p>';return}
+  if(!reqOpen()){$('consultBox').innerHTML='<h2>Request a free consult</h2><p>Online requests are not open right now. For now, email us at <a href="mailto:'+esc(OWNER_EMAIL)+'">'+esc(OWNER_EMAIL)+'</a>.</p>';return}
   $('cConsentText').innerHTML=consentHtml();return}
  if(!SCAN_ENDPOINT)return;
  $('reqBox').hidden=false;
- if(!noticeOk()){$('reqBox').innerHTML='<p class="note">Online requests open once our privacy notice is posted. For now, use the email button below.</p>';return}
+ if(!reqOpen()){$('reqBox').innerHTML='<p class="note">Online requests are not open right now. For now, use the email button below.</p>';return}
  $('reqNote').innerHTML=(REQUEST_MODE==='full'?'Sending shares your name, business, contact details, every answer you gave, your phone and website results, anything from a deeper scan you loaded, and the website you came from. Nothing else.':'Sending shares your name, business, contact details, and the website you came from. It does not send your answers, results, or scan.')+'<span id="reqPrivacy"></span>';
  $('reqConsentText').innerHTML=consentHtml();
  const b=document.querySelector('#gate button[onclick="sendIt()"]');if(b){b.className='btn s';b.style.marginTop='8px';b.textContent='Or email me my full report'}
